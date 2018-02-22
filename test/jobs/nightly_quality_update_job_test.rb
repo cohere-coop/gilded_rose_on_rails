@@ -31,7 +31,7 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     assert_equal 80, item.quality
   end
 
-  def test_backstage_passes
+  def test_backstage_pass
     item = Item.create(sell_in: 11, quality: 10, name: "Backstage pass to a TAFKAL80ETC concert")
 
     NightlyQualityUpdateJob.perform_now
