@@ -7,8 +7,8 @@ class SulfurasQualityUpdateJobTest < ActiveSupport::TestCase
     SulfurasQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, 5
-    assert_equal item.quality, 80
+    assert_equal 5, item.sell_in
+    assert_equal 80, item.quality
   end
 
   def test_on_sell_date
@@ -17,8 +17,8 @@ class SulfurasQualityUpdateJobTest < ActiveSupport::TestCase
     SulfurasQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, 0
-    assert_equal item.quality, 80
+    assert_equal 0, item.sell_in
+    assert_equal 80, item.quality
   end
 
   def test_after_sell_date
@@ -27,7 +27,7 @@ class SulfurasQualityUpdateJobTest < ActiveSupport::TestCase
     SulfurasQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -5
-    assert_equal item.quality, 80
+    assert_equal -5, item.sell_in
+    assert_equal 80, item.quality
   end
 end
