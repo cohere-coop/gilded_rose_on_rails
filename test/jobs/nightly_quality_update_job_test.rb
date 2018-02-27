@@ -43,21 +43,11 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
 
   def test_conjured
     item = Item.create(quality: 5, sell_in: 10, name: "Conjured Mana Cake")
-    item2 = Item.create(quality: 5, sell_in: 10, name: "Conjured Aged Brie")
-    item3 = Item.create(quality: 5, sell_in: 10, name: "Conjured Beef Jerky")
 
     NightlyQualityUpdateJob.perform_now
     item.reload
-    item2.reload
-    item3.reload
 
-    assert_equal 9, item.sell_in
-    assert_equal 3, item.quality
-
-    assert_equal 9, item2.sell_in
-    assert_equal 7, item2.quality
-
-    assert_equal 9, item3.sell_in
-    assert_equal 3, item3.quality
+    assert_equal item.sell_in, 9
+    assert_equal item.quality, 3
   end
 end
