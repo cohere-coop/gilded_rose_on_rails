@@ -7,8 +7,8 @@ class AgedBrieQualityUpdateJobTest < ActiveSupport::TestCase
     AgedBrieQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, 4
-    assert_equal item.quality, 11
+    assert_equal 4, item.sell_in
+    assert_equal 11, item.quality
   end
 
   def test_aged_brie_with_max_quality_before_sell_date
@@ -17,8 +17,8 @@ class AgedBrieQualityUpdateJobTest < ActiveSupport::TestCase
     AgedBrieQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, 4
-    assert_equal item.quality, 50
+    assert_equal 4, item.sell_in
+    assert_equal 50, item.quality
   end
 
   def test_aged_brie_near_max_quality_on_sell_date
@@ -27,8 +27,8 @@ class AgedBrieQualityUpdateJobTest < ActiveSupport::TestCase
     AgedBrieQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -1
-    assert_equal item.quality, 50
+    assert_equal -1, item.sell_in
+    assert_equal 50, item.quality
   end
 
   def test_aged_brie_with_max_quality_on_sell_date
@@ -37,8 +37,8 @@ class AgedBrieQualityUpdateJobTest < ActiveSupport::TestCase
     AgedBrieQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -1
-    assert_equal item.quality, 50
+    assert_equal -1, item.sell_in
+    assert_equal 50, item.quality
   end
 
   def test_aged_brie_after_sell_date
@@ -47,8 +47,8 @@ class AgedBrieQualityUpdateJobTest < ActiveSupport::TestCase
     AgedBrieQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -2
-    assert_equal item.quality, 12
+    assert_equal -2, item.sell_in
+    assert_equal 12, item.quality
   end
 
   def test_aged_brie_with_max_quality_after_sell_date
@@ -57,7 +57,7 @@ class AgedBrieQualityUpdateJobTest < ActiveSupport::TestCase
     AgedBrieQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -2
-    assert_equal item.quality, 50
+    assert_equal -2, item.sell_in
+    assert_equal 50, item.quality
   end
 end

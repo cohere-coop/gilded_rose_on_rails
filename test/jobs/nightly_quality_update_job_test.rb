@@ -7,8 +7,8 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     NightlyQualityUpdateJob.perform_now
     item.reload
 
-    assert_equal item.sell_in, 4
-    assert_equal item.quality, 9
+    assert_equal 4, item.sell_in
+    assert_equal 9, item.quality
   end
 
   def test_aged_brie
@@ -17,8 +17,8 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     NightlyQualityUpdateJob.perform_now
     item.reload
 
-    assert_equal item.sell_in, 4
-    assert_equal item.quality, 11
+    assert_equal 4, item.sell_in
+    assert_equal 11, item.quality
   end
 
   def test_sulfuras
@@ -27,8 +27,8 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     NightlyQualityUpdateJob.perform_now
     item.reload
 
-    assert_equal item.sell_in, 5
-    assert_equal item.quality, 80
+    assert_equal 5, item.sell_in
+    assert_equal 80, item.quality
   end
 
   def test_backstage_passes
@@ -37,8 +37,8 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     NightlyQualityUpdateJob.perform_now
     item.reload
 
-    assert_equal item.sell_in, 10
-    assert_equal item.quality, 11
+    assert_equal 10, item.sell_in
+    assert_equal 11, item.quality
   end
 
   def test_conjured
@@ -47,7 +47,7 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     NightlyQualityUpdateJob.perform_now
     item.reload
 
-    assert_equal item.sell_in, 9
-    assert_equal item.quality, 3
+    assert_equal 9, item.sell_in
+    assert_equal 3, item.quality
   end
 end

@@ -7,8 +7,8 @@ class ConjuredQualityUpdateJobTest < ActiveSupport::TestCase
     ConjuredQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, 9
-    assert_equal item.quality, 3
+    assert_equal 9, item.sell_in
+    assert_equal 3, item.quality
   end
 
   def test_min_quality_before_sell_date
@@ -17,8 +17,8 @@ class ConjuredQualityUpdateJobTest < ActiveSupport::TestCase
     ConjuredQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, 9
-    assert_equal item.quality, 0
+    assert_equal 9, item.sell_in
+    assert_equal 0, item.quality
   end
 
   def test_on_sell_date
@@ -27,8 +27,8 @@ class ConjuredQualityUpdateJobTest < ActiveSupport::TestCase
     ConjuredQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -1
-    assert_equal item.quality, 1
+    assert_equal -1, item.sell_in
+    assert_equal 1, item.quality
   end
 
   def test_min_quality_on_sell_date
@@ -37,8 +37,8 @@ class ConjuredQualityUpdateJobTest < ActiveSupport::TestCase
     ConjuredQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -1
-    assert_equal item.quality, 0
+    assert_equal -1, item.sell_in
+    assert_equal 0, item.quality
   end
 
   def test_after_sell_date
@@ -47,8 +47,8 @@ class ConjuredQualityUpdateJobTest < ActiveSupport::TestCase
     ConjuredQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -2
-    assert_equal item.quality, 1
+    assert_equal -2, item.sell_in
+    assert_equal 1, item.quality
   end
 
   def test_min_quality_before_sell_date
@@ -57,7 +57,7 @@ class ConjuredQualityUpdateJobTest < ActiveSupport::TestCase
     ConjuredQualityUpdateJob.perform_now(item)
     item.reload
 
-    assert_equal item.sell_in, -2
-    assert_equal item.quality, 0
+    assert_equal -2, item.sell_in
+    assert_equal 0, item.quality
   end
 end
