@@ -1,123 +1,69 @@
 require 'test_helper'
 
 class BackstagePassesQualityUpdateJobTest < ActiveSupport::TestCase
-  def test_well_before_sell_date
-    item = Item.create(sell_in: 11, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_well_before_sell_date
+    item = Item.new(sell_in: 11, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 10, item.sell_in
-    assert_equal 11, item.quality
+    assert_equal -1, job.depreciation(item)
   end
 
-  def test_max_quality_well_before_sell_date
-    item = Item.create(sell_in: 11, quality: 50, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_medium_close_to_sell_date_upper_bound
+    item = Item.new(sell_in: 10, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 10, item.sell_in
-    assert_equal 50, item.quality
+    assert_equal -2, job.depreciation(item)
   end
 
-  def test_medium_close_to_sell_date_upper_bound
-    item = Item.create(sell_in: 10, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_medium_close_to_sell_date_lower_bound
+    item = Item.new(sell_in: 6, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 9, item.sell_in
-    assert_equal 12, item.quality
+    assert_equal -2, job.depreciation(item)
   end
 
-  def test_max_quality_medium_close_to_sell_date_upper_bound
-    item = Item.create(sell_in: 10, quality: 50, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_very_close_to_sell_date_upper_bound
+    item = Item.new(sell_in: 5, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 9, item.sell_in
-    assert_equal 50, item.quality
+    assert_equal -3, job.depreciation(item)
   end
 
-  def test_medium_close_to_sell_date_lower_bound
-    item = Item.create(sell_in: 6, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_very_close_to_sell_date_lower_bound
+    item = Item.new(sell_in: 1, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 5, item.sell_in
-    assert_equal 12, item.quality
+    assert_equal -3, job.depreciation(item)
   end
 
-  def test_max_quality_medium_close_to_sell_date_lower_bound
-    item = Item.create(sell_in: 6, quality: 50, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_on_sell_date
+    item = Item.new(sell_in: 0, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 5, item.sell_in
-    assert_equal 50, item.quality
+    assert_equal 10, job.depreciation(item)
   end
 
-  def test_very_close_to_sell_date_upper_bound
-    item = Item.create(sell_in: 5, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_depreciation_after_sell_date
+    item = Item.new(sell_in: 0, quality: 0, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 4, item.sell_in
-    assert_equal 13, item.quality
+    assert_equal 0, job.depreciation(item)
   end
 
-  def test_max_quality_very_close_to_sell_date_upper_bound
-    item = Item.create(sell_in: 5, quality: 50, name: "Backstage passes to a TAFKAL80ETC concert")
+  def test_aging
+    item = Item.new(sell_in: 0, quality: 0, name: "Backstage passes to a TAFKAL80ETC concert")
+    job = BackstagePassesQualityUpdateJob.new
 
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 4, item.sell_in
-    assert_equal 50, item.quality
+    assert_equal 1, job.aging(item)
   end
 
-  def test_very_close_to_sell_date_lower_bound
-    item = Item.create(sell_in: 1, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
-
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 0, item.sell_in
-    assert_equal 13, item.quality
+  def test_min_quality
+    job = BackstagePassesQualityUpdateJob.new
+    assert_equal 0, job.min_quality
   end
 
-  def test_max_quality_very_close_to_sell_date_lower_bound
-    item = Item.create(sell_in: 1, quality: 50, name: "Backstage passes to a TAFKAL80ETC concert")
-
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal 0, item.sell_in
-    assert_equal 50, item.quality
-  end
-
-  def test_on_sell_date
-    item = Item.create(sell_in: 0, quality: 50, name: "Backstage passes to a TAFKAL80ETC concert")
-
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal -1, item.sell_in
-    assert_equal 0, item.quality
-  end
-
-  def test_after_sell_date
-    item = Item.create(sell_in: -1, quality: 0, name: "Backstage passes to a TAFKAL80ETC concert")
-
-    BackstagePassesQualityUpdateJob.perform_now(item)
-    item.reload
-
-    assert_equal -2, item.sell_in
-    assert_equal 0, item.quality
+  def test_max_quality
+    job = BackstagePassesQualityUpdateJob.new
+    assert_equal 50, job.max_quality
   end
 end
