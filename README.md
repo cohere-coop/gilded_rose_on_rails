@@ -4,18 +4,24 @@ Welcome to the Gilded Rose Magickal Emporium! Or, more accurately, welcome to it
 
 Here at the Gilded Rose we buy and sell only the finest goods. Unfortunately, our
 goods are constantly degrading in quality as they approach their sell by
-date. We have a system in place that updates our inventory for us. It was
-developed by a no-nonsense type named Leeroy, who has moved on to new
-adventures. Your task is to add the new feature to our system so that we
-can begin selling a new category of items. First an introduction to our
-system:
+date. We have a system in place that updates our inventory for us. The original developer of that system has since moved on to new
+adventures.
+
+## Getting Started
+
+```
+bin/setup
+bin/rake
+```
+
+## An introduction to our system
 
 - All items have a `sell_in` value which denotes the number of days we have
 to sell the item
 - All items have a `quality` value which denotes how valuable the item is
 - At the end of each day our system lowers both values for every item
 
-Pretty simple, right? Well this is where it gets interesting:
+As the Gilded Rose offered more inventory, we ran into a few exceptions that we quickly updated the system to accommodate:
 
 - Once the sell by date has passed, `quality` degrades twice as fast
 - The `quality` of an item is never negative
@@ -27,20 +33,36 @@ in `quality`
 and by 3 when there are 5 days or less, but `quality` drops to 0 after the
 concert
 
-We have recently signed a supplier of conjured items. "Conjured" items degrade in `quality` twice as fast as normal items. A previous development team was hired to complete this feature, but they were unfortunately very literal in their adherence to acceptance test cases and have been fired. They interpreted "Conjured Mana Cakes" as the only potential conjured items, when in fact any item (except legendary items) could potentially be a conjured item. Please let us know early on if you have any further questions about the definition of conjured items. We would like to avoid other unpleasant situations like the one that consumed our previous development team.
-
-**Important!** Right now the database schema stores the `sell_in` value as a time remaining integer. Also, we run a nightly `ActiveJob` to change `quality` and `sell_in` that works by fanning out a number of other queued jobs that we can run in a highly parallelized manner. These are both important architectural properties -- magical timezones are even worse than normal time zones, *trust us*. Please don't change the database schema or the job parallelization structure while you fix these bugs! Our insurance does not cover the potential negative effects that destablilizing Sulfuras in this way could cause. And, of course, even if it did you would be financially responsible for any ensuing property damage rather than us.
-
 Just for clarification, an item can never have its `quality` increase
 above 50, however "Sulfuras" is a legendary item and as such its
 `quality` is 80 and it never alters.
 
-## Getting Started
+### Nightly system updates
 
-```
-bin/setup
-bin/rake
-```
+We run a nightly `ActiveJob` to change `quality` and `sell_in`, `jobs/nightly_quality_update_job.rb`.
+It works by fanning out a number of other queued jobs that we can run in a highly parallelized manner.
+
+### DO NOT MODIFY THE DATABASE SCHEMA
+
+The database schema stores the `sell_in` value as a time remaining integer.  
+Please don't change the database schema!
+Both our brick-and-mortar stores and our database servers are geographically located in the UMC (Coordinated Universal Magical Time) timezone, which as you know has inconsistent interactions with both Ruby and Rails core.
+Previous changes to the database schema had unpleasant side effects, so all schema changes are now forbidden.
+
+
+## Your task
+
+We have recently signed a supplier of conjured items.
+"Conjured" items degrade in `quality` twice as fast as normal items.
+
+We're currently only carrying "Conjured Mana Cakes", and don't anticipate expanding our Conjured line of items in your lifetime.  Since it's such a simple task and we don't anticipate changes for a long time, we're allocating **10 minutes** for you to deliver this feature.
+
+## Your next task
+
+Great news! our sales rep just came through for us, and we'll be supplying our stores with all manner of Conjured items!
+
+Your task is to support all "Conjured" items in our inventory system so that we can begin selling this exciting new category of items.
+
 
 ## Credits
 
