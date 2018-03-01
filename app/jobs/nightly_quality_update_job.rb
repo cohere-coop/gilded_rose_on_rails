@@ -8,8 +8,6 @@ class NightlyQualityUpdateJob < ApplicationJob
         SulfurasQualityUpdateJob
       when "Backstage passes to a TAFKAL80ETC concert"
         BackstagePassesQualityUpdateJob
-      when "Conjured Mana Cake"
-        ConjuredQualityUpdateJob
       else
         ItemQualityUpdateJob
       end
