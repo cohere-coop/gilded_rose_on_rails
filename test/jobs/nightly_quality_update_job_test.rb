@@ -40,4 +40,14 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     assert_equal 10, item.sell_in
     assert_equal 11, item.quality
   end
+
+  def test_conjured_mana_cake
+    item = Item.create(sell_in: 11, quality: 10, name: "Conjured Mana Cake")
+
+    NightlyQualityUpdateJob.perform_now
+    item.reload
+
+    assert_equal 10, item.sell_in
+    assert_equal  8, item.quality
+  end
 end
