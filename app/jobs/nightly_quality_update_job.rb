@@ -6,12 +6,10 @@ class NightlyQualityUpdateJob < ApplicationJob
         AgedBrieQualityUpdateJob
       when "Sulfuras, Hand of Ragnaros"
         SulfurasQualityUpdateJob
-      when "Backstage pass to a TAFKAL80ETC concert"
+      when /Backstage pass/
         BackstagePassQualityUpdateJob
       when "Conjured Aged Brie"
       when "Conjured Sulfuras, Hand of Ragnaros"
-      when /^Conjured backstage pass/i
-        ConjuredBackstagePassQualityUpdateJob
       when /^Conjured/
         ConjuredItemQualityUpdateJob
       else
