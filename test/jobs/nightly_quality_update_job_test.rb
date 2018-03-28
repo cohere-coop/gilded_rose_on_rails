@@ -60,6 +60,7 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_conjured_aged_brie
+    skip
     item = Item.create(sell_in: 5, quality: 10, name: "Conjured Aged Brie")
 
     NightlyQualityUpdateJob.perform_now
@@ -70,6 +71,7 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_conjured_sulfuras
+    skip
     item = Item.create(sell_in: 5, quality: 80, name: "Conjured Sulfuras, Hand of Ragnaros")
 
     NightlyQualityUpdateJob.perform_now
