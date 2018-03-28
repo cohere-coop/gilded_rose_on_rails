@@ -7,7 +7,15 @@ class ConjuredBackstagePassQualityUpdateJob < AgedBrieQualityUpdateJob
     when item.sell_in <= 10
       -2 * 2
     else
-      super * 2
+      aged_brie_depreciation(item) * 2
     end
+  end
+
+  def aged_brie_depreciation(item)
+    item_depreciation(item) * -1
+  end
+
+  def item_depreciation(item)
+    item.sell_in > 0 ? 1 : 2
   end
 end
