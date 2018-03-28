@@ -58,4 +58,34 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
     assert_equal 10, kale.sell_in
     assert_equal  8, kale.quality
   end
+
+  def test_conjured_aged_brie
+    item = Item.create(sell_in: 5, quality: 10, name: "Conjured Aged Brie")
+
+    NightlyQualityUpdateJob.perform_now
+    item.reload
+
+    assert_equal 4, item.sell_in
+    assert_equal 12, item.quality
+  end
+
+  def test_conjured_sulfuras
+    item = Item.create(sell_in: 5, quality: 80, name: "Conjured Sulfuras, Hand of Ragnaros")
+
+    NightlyQualityUpdateJob.perform_now
+    item.reload
+
+    assert_equal 5, item.sell_in
+    assert_equal 80, item.quality
+  end
+
+  def test_conjured_backstage_pass
+    item = Item.create(sell_in: 11, quality: 10, name: "Conjured Backstage pass to a TAFKAL80ETC concert")
+
+    NightlyQualityUpdateJob.perform_now
+    item.reload
+
+    assert_equal 10, item.sell_in
+    assert_equal 12, item.quality
+  end
 end
