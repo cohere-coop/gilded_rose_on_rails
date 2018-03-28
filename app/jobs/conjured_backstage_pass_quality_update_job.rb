@@ -1,7 +1,11 @@
 class ConjuredBackstagePassQualityUpdateJob < ItemQualityUpdateJob
   def depreciation(item)
     return item.quality if item.sell_in <= 0
-    2 * base_depreciation(item)
+    if item.name.match(/^Conjured/)
+      2 * base_depreciation(item)
+    else
+      base_depreciation(item)
+    end
   end
 
   def base_depreciation(item)
