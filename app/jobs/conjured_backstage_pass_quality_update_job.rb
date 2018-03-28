@@ -9,7 +9,7 @@ class ConjuredBackstagePassQualityUpdateJob < ItemQualityUpdateJob
     when item.sell_in > 0
       -1 * 2
     else
-      (item.sell_in > 0 ? 1 : 2) * -1 * 2
+      -2 * 2
     end
   end
 end
