@@ -11,6 +11,7 @@ class NightlyQualityUpdateJob < ApplicationJob
       when "Conjured Aged Brie"
       when "Conjured Sulfuras, Hand of Ragnaros"
       when /^Conjured backstage pass/i
+        ConjuredBackstagePassQualityUpdateJob
       when /^Conjured/
         ConjuredItemQualityUpdateJob
       else
