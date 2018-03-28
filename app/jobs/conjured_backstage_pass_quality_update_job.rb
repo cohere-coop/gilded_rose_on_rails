@@ -12,10 +12,6 @@ class ConjuredBackstagePassQualityUpdateJob < AgedBrieQualityUpdateJob
   end
 
   def aged_brie_depreciation(item)
-    item_depreciation(item) * -1
-  end
-
-  def item_depreciation(item)
-    item.sell_in > 0 ? 1 : 2
+    (item.sell_in > 0 ? 1 : 2) * -1
   end
 end
