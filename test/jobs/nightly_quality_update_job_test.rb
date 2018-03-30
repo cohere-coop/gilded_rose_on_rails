@@ -2,7 +2,7 @@ require 'test_helper'
 
 class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
   def test_normal_item
-    item = Item.create(sell_in: 5, quality: 10)
+    item = Item.create(sell_in: 5, quality: 10, name: "Mana Cake")
 
     NightlyQualityUpdateJob.perform_now
     item.reload
@@ -32,7 +32,7 @@ class NightlyQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_backstage_passes
-    item = Item.create(sell_in: 11, quality: 10, name: "Backstage passes to a TAFKAL80ETC concert")
+    item = Item.create(sell_in: 11, quality: 10, name: "Backstage pass to a TAFKAL80ETC concert")
 
     NightlyQualityUpdateJob.perform_now
     item.reload

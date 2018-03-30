@@ -1,4 +1,4 @@
-class BackstagePassesQualityUpdateJob < AgedBrieQualityUpdateJob
+class BackstagePassQualityUpdateJob < AgedBrieQualityUpdateJob
   def depreciation(item)
     return item.quality if item.sell_in <= 0
     case

@@ -6,8 +6,8 @@ class NightlyQualityUpdateJob < ApplicationJob
         AgedBrieQualityUpdateJob
       when "Sulfuras, Hand of Ragnaros"
         SulfurasQualityUpdateJob
-      when "Backstage passes to a TAFKAL80ETC concert"
-        BackstagePassesQualityUpdateJob
+      when "Backstage pass to a TAFKAL80ETC concert"
+        BackstagePassQualityUpdateJob
       else
         ItemQualityUpdateJob
       end

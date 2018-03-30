@@ -2,8 +2,8 @@ require 'test_helper'
 
 class ItemQualityUpdateJobTest < ActiveSupport::TestCase
   def test_nightly_update_depreciates_item
-    item = Item.create(sell_in: 5, quality: 10)
-    
+    item = Item.create(sell_in: 5, quality: 10, name: "Mana Cake")
+
     ItemQualityUpdateJob.perform_now(item)
     item.reload
 
@@ -11,8 +11,8 @@ class ItemQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_nightly_update_decrements_sell_in
-    item = Item.create(sell_in: 5, quality: 10)
-    
+    item = Item.create(sell_in: 5, quality: 10, name: "Mana Cake")
+
     ItemQualityUpdateJob.perform_now(item)
     item.reload
 
@@ -20,8 +20,8 @@ class ItemQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_quality_cannot_go_below_min_quality
-    item = Item.create(sell_in: 5, quality: 0)
-    
+    item = Item.create(sell_in: 5, quality: 0, name: "Mana Cake")
+
     ItemQualityUpdateJob.perform_now(item)
     item.reload
 
@@ -29,8 +29,8 @@ class ItemQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_quality_cannot_be_above_max_quality
-    item = Item.create(sell_in: 5, quality: 60)
-    
+    item = Item.create(sell_in: 5, quality: 60, name: "Mana Cake")
+
     ItemQualityUpdateJob.perform_now(item)
     item.reload
 
@@ -38,28 +38,28 @@ class ItemQualityUpdateJobTest < ActiveSupport::TestCase
   end
 
   def test_depreciation_before_sell_date
-    item = Item.new(sell_in: 5, quality: 10)
+    item = Item.new(sell_in: 5, quality: 10, name: "Mana Cake")
     job = ItemQualityUpdateJob.new
 
     assert_equal 1, job.depreciation(item)
   end
 
   def test_depreciation_on_sell_date
-    item = Item.new(sell_in: 0, quality: 10)
+    item = Item.new(sell_in: 0, quality: 10, name: "Mana Cake")
     job = ItemQualityUpdateJob.new
 
     assert_equal 2, job.depreciation(item)
   end
 
   def test_depreciation_after_sell_date
-    item = Item.new(sell_in: 0, quality: 10)
+    item = Item.new(sell_in: 0, quality: 10, name: "Mana Cake")
     job = ItemQualityUpdateJob.new
 
     assert_equal 2, job.depreciation(item)
   end
 
   def test_aging
-    item = Item.new(sell_in: 0, quality: 10)
+    item = Item.new(sell_in: 0, quality: 10, name: "Mana Cake")
     job = ItemQualityUpdateJob.new
 
     assert_equal 1, job.aging(item)

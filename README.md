@@ -29,7 +29,7 @@ As the Gilded Rose offered more inventory, we ran into a few exceptions that we 
 - The `quality` of an item is never more than 50
 - "Sulfuras", being a legendary item, never has to be sold or decreases
 in `quality`
-- "Backstage passes", like aged brie, increase in `quality` as time passes; `quality` increases by 2 when there are 10 days or less until the concert date,
+- "Backstage pass", like aged brie, increase in `quality` as time passes; `quality` increases by 2 when there are 10 days or less until the concert date,
 and by 3 when there are 5 days or less, but `quality` drops to 0 after the
 concert
 
